@@ -7,6 +7,9 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 export class PurchasesServices {
     constructor(private http: HttpClient){}
 
+    addPurchase(payload: Object){
+            return of(true);
+    }
     getPurchase(){
         return of([
             {

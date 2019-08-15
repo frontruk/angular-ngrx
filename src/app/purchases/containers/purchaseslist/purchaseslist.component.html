@@ -1,0 +1,16 @@
+<div style="display: flex;">
+  <div>
+    <h2>Products purchased</h2>
+    <ul>
+      <li *ngFor="let item of purchases$ | async">
+        {{item.name}}
+      </li>
+    </ul>
+    <button (click)="getPurchases()">Get purchases</button>
+  </div>
+  <div>
+    Add a Product
+    <input type="text" #datainput/>
+    <button (click)="addProduct(datainput.value)">Add product</button>
+  </div>
+</div>

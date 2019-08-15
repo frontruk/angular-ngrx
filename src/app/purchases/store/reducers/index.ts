@@ -1,44 +1,65 @@
-import { Action } from '@ngrx/store';
+import { Action, createFeatureSelector } from '@ngrx/store';
 import { PurchasesModel } from '../models/';
 import * as fromActions from '../actions/';
 
-const initialState: PurchasesModel = {
-    purhcases: {},
+export const initialState: PurchasesModel = {
+    purhcases: [],
     loaded: false,
     loading: false,
     error: {},
 }
 
 export function purchasesReducer(
-    state: PurchasesModel[] = [initialState],
+    state: PurchasesModel = initialState,
     action: fromActions.PurchasesActions
 ): PurchasesModel {
     switch(action.type) {
         case fromActions.PurchasesTypes.GET_PURCHASES:{
             return { 
-                ...initialState,
+                ...state,
                 loading: true
             }
         } 
         case fromActions.PurchasesTypes.GET_PURCHASES_SUCCESS: {
 
             return { 
-                ...initialState,
-                purhcases: action.payload,
+                ...state,
+                purhcases: [ ...state.purhcases, ...action.payload],
                 loading: false,
                 loaded: true,
             }
         }
         case fromActions.PurchasesTypes.GET_PURCHASES_FAILURE: {
             return { 
-                ...initialState,
+                ...state,
+                loading: false,
+                loaded: false,
+                error: action.payload,
+            }
+        }
+        case fromActions.PurchasesTypes.ADD_PURCHASE:{
+            return { 
+                ...state,
+                loading: true
+            }
+        } 
+        case fromActions.PurchasesTypes.ADD_PURCHASE_SUCCESS: {
+           
+            return { 
+                ...state,
+                purhcases: [...state.purhcases, action.payload],
+            }
+        }
+        case fromActions.PurchasesTypes.ADD_PURCHASE_FAILURE: {
+            return { 
+                ...state,
                 loading: false,
                 loaded: false,
                 error: action.payload,
             }
         }
         default: 
-            return initialState;
+            return state;
     }
 }
 

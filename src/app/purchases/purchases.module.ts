@@ -8,9 +8,10 @@ import {
   PurchasesServices
 } from './store';
 import { HttpClientModule } from '@angular/common/http';
+import { PurchaseslistComponent } from './containers/purchaseslist/purchaseslist.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [PurchaseslistComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -20,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     PurchasesEffects,
     PurchasesServices
-  ]
+  ],
+  exports: [PurchaseslistComponent]
 })
 export class PurchasesModule { }

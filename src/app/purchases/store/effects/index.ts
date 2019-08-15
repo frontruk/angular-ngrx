@@ -29,4 +29,16 @@ export class PurchasesEffects {
     )
 
 
+    @Effect({ dispatch: true })
+    AddPurchase$ = this.actions$.pipe(
+        ofType(fromActions.PurchasesTypes.ADD_PURCHASE),
+        map((action: fromActions.AddPurchase) => action.payload),
+        switchMap((payload: Object) => {
+            return this.purchasesServices.addPurchase(payload).pipe(
+                map(() => new fromActions.AddPurchaseSuccess(payload)),
+                catchError((e: HttpErrorResponse) => of(new fromActions.AddPurchaseFailure(e)))
+            )
+        })
+    )
+
 }
