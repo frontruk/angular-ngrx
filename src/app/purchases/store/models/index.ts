@@ -1,5 +1,6 @@
 export interface PurchasesModel {
-  purhcases: Array<any>;
+  purhcases: Array<any> | {};
   loaded: boolean;
   loading: boolean;
+  error: any;
 }

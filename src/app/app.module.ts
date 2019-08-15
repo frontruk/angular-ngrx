@@ -8,6 +8,7 @@ import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { PurchasesModule } from './purchases/purchases.module';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PurchasesModule } from './purchases/purchases.module';
         strictActionImmutability: true
       }
     }),
+    EffectsModule.forRoot([]),
     PurchasesModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
