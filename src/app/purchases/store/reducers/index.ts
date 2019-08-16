@@ -1,69 +1,53 @@
-import { Action, createFeatureSelector } from '@ngrx/store';
+// Dependecies
+import { Action, createFeatureSelector, State } from '@ngrx/store';
 import { PurchasesModel } from '../models/';
 import * as fromActions from '../actions/';
+import { PurchasesModule } from '../../purchases.module';
 
-export const initialState: PurchasesModel = {
-    purhcases: [],
+// IntialState : Type 
+const intialState:PurchasesModel = {
+    purchases: [],
     loaded: false,
     loading: false,
-    error: {},
+    error: false,
 }
-
+// Function : State , action
 export function purchasesReducer(
-    state: PurchasesModel = initialState,
+    state: PurchasesModel = intialState,
     action: fromActions.PurchasesActions
-): PurchasesModel {
-    switch(action.type) {
+): PurchasesModel{
+    switch(action.type){
         case fromActions.PurchasesTypes.GET_PURCHASES:{
-            return { 
+            return {
                 ...state,
                 loading: true
             }
-        } 
-        case fromActions.PurchasesTypes.GET_PURCHASES_SUCCESS: {
-
-            return { 
+        }
+        case fromActions.PurchasesTypes.GET_PURCHASES_SUCCESS:{
+            return{
                 ...state,
-                purhcases: [ ...state.purhcases, ...action.payload],
                 loading: false,
                 loaded: true,
+                purchases: [
+                    ...state.purchases,
+                    ...action.payload
+                ]
             }
         }
-        case fromActions.PurchasesTypes.GET_PURCHASES_FAILURE: {
-            return { 
+        case fromActions.PurchasesTypes.GET_PURCHASES_FAILURE:{
+            return {
                 ...state,
                 loading: false,
                 loaded: false,
-                error: action.payload,
             }
         }
-        case fromActions.PurchasesTypes.ADD_PURCHASE:{
-            return { 
-                ...state,
-                loading: true
-            }
-        } 
-        case fromActions.PurchasesTypes.ADD_PURCHASE_SUCCESS: {
-           
-            return { 
-                ...state,
-                purhcases: [...state.purhcases, action.payload],
-            }
-        }
-        case fromActions.PurchasesTypes.ADD_PURCHASE_FAILURE: {
-            return { 
-                ...state,
-                loading: false,
-                loaded: false,
-                error: action.payload,
-            }
-        }
-        default: 
+        default:
             return state;
     }
+
 }
 
-export const getPurchases = (initialState: PurchasesModel) => initialState.purhcases;
-export const loading = (initialState: PurchasesModel) => initialState.loading;
-export const loaded = (initialState: PurchasesModel) => initialState.loaded;
-export const error = (initialState: PurchasesModel) => initialState.error;
+export const getPurchase = (state: PurchasesModel ) => state.purchases;
+export const loading = (state: PurchasesModel ) => state.loading;
+export const loaded = (state: PurchasesModel ) => state.loaded;
+export const error = (state: PurchasesModel ) => state.error;
